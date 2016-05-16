@@ -6,3 +6,4 @@ data.json is the classical force-field data for matrerial properties such as ela
 from_ctcms.py is the script to get force-fields from ctcms website.
 get_entries_from_json.py and get_entries_from_ecjson.py is the script to compare materials project and JARVIS-FF data such as energetics, convex hull plot.
 postprocess.py is the post-procesing script after running ctcms_alloy.py
+Note lammps.py in MPinterfaces has been changed to MP_lammps.py
