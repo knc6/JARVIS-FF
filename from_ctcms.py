@@ -22,7 +22,7 @@ from pymatgen.phasediagram.pdmaker import PhaseDiagram
 from pymatgen.phasediagram.plotter import PDPlotter
 
 from mpinterfaces import get_struct_from_mp
-from mpinterfaces.lammps import CalibrateLammps
+from mpinterfaces.MP_lammps import CalibrateLammps
 from mpinterfaces.utils import *
 
 # all the info/warnings/outputs redirected to the log file: 
