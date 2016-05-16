@@ -58,10 +58,10 @@ fix 3 all box/relax  aniso 0.0
 #dump            2a all cfg 100 *.cfg mass type xs ys  zs  vx vy vz fx fy fz q
 #dump_modify     2a element  Mo S
 
-fix 1a all qeq/comb 1 0.0001 file fq.out
+#fix 1a all qeq/comb 1 0.0001 file fq.out
 #fix             2 all qeq/reax 1 0.0 10.0 1e-6 /scratch/lfs/kamal/JARVIS/All2/ReaxFF/param.qeq
 #minimize ${etol} ${ftol} ${maxiter} ${maxeval}
-minimize ${etol} ${ftol} ${maxiter} ${maxeval}
+#minimize ${etol} ${ftol} ${maxiter} ${maxeval}
 minimize ${etol} ${ftol} ${maxiter} ${maxeval}
 
 variable tmp equal pxx
