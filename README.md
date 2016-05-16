@@ -1,6 +1,6 @@
 # JARVIS-FF
 
-JARVIS-FF contains the scripts for making repository for evaluating classi cal force field available at http://www.ctcms.nist.gov/~knc6/periodic.html.
+JARVIS-FF contains the scripts for making repository for evaluating classical force field available at http://www.ctcms.nist.gov/~knc6/periodic.html.
 1) ctcms_alloy.py is the scripts for setting up MPinterface (https://github.com/JARVIS-Unifies/MPInterfaces) and  running LAMMPS calculation. Similar scripts have been used for other force-fields such as AIREBO,COMB, ReaxFF and so on.
 2) data.json is the classical force-field data for matrerial properties such as elastic constnats, energies.
 3) from_ctcms.py is the script to get force-fields from ctcms interatomic potential repository website (http://www.ctcms.nist.gov/potentials/).
