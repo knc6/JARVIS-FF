@@ -2,6 +2,7 @@ from __future__ import division, unicode_literals, print_function
 
 """
 Calibrate LAMMPS jobs
+Copyright (c) Kamal Choudhary, Kiran Mathew
 """
 
 import os
