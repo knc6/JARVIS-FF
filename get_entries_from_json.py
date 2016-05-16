@@ -61,7 +61,7 @@ def get_entries_from_json(key=None,value=None,out=None,ff=None,json_f=None,PD=Fa
     return output
                        
 
-##PD
+##Used for phase diagram
 entries=get_entries_from_json(key='search',value='Cu-H-O',out='energy',ff='ffield.CuOCH.comb3',json_f='data.json',PD=True)
 #entries=get_entries_from_json(key='search',value='Fe-H-O',out='energy',ff='ffield.reax.Fe_O_C_H',json_f='data.json',PD=True)
 #entries=get_entries_from_json(key='search',value='Al-Ni',out='energy',ff='Mishin-Ni-Al-2009.eam.alloy',json_f='data.json',PD=True)
