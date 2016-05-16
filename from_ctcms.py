@@ -1,7 +1,7 @@
 # Copyright (c) Kamal Choudhary
 import os
 from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
-from pymatgen.core.periodic_table import Element,all_symbols
+from pymatgen.core.periodic_table import Element #,all_symbols
 import sys
 import urllib2
 import urllib
@@ -33,14 +33,16 @@ logger = get_logger('lammps_Al_O')
 
 
 #els=all_symbols()
-els=['Al']
-allsymb=all_symbols()
+els=Element #['Al']
+allsymb=Element #all_symbols()
 files=[]
 for el in els:
     try:
        #os.makedirs(str(os.getcwd())+'/'+str(el)+str('.dir'))
        #os.chdir(str(os.getcwd())+'/'+str(el)+str('.dir'))
-       os.makedirs(str('/scratch/lfs/kamal/JARVIS')+'/'+str(el)+str('.dir'))
+       
+       #change directory name here
+       os.makedirs(str('/scratch/lfs/kamal/JARVIS')+'/'+str(el)+str('.dir')) 
        os.chdir(str('/scratch/lfs/kamal/JARVIS')+'/'+str(el)+str('.dir'))
        print(os.getcwd() )
        link=str("http://www.ctcms.nist.gov/potentials/")+str(el)+str(".html")
@@ -85,7 +87,7 @@ for el in els:
                            mp_arr.append(x)
 
 
-                  scell_size = 1
+                  scell_size = 1 #needs to be changed to 12 for COMB
                   for s in structures:
                       SpacegroupAnalyzer(s).get_conventional_standard_structure()
                       a, b, c = s.lattice.abc
