@@ -27,7 +27,7 @@ from mpinterfaces.utils import *
 
 # all the info/warnings/outputs redirected to the log file: 
 # lammps_Al_O.log
-#logger = get_logger('lammps_Al_O')
+logger = get_logger('lammps_Al_O')
 
 
 
