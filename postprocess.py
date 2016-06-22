@@ -1,7 +1,7 @@
-# Copyright (c) Kamal Choudhary
+
 import os
 from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
-from pymatgen.core.periodic_table import Element#,all_symbols
+from pymatgen.core.periodic_table import Element
 import sys,traceback
 import urllib2
 import zipfile 
@@ -79,11 +79,11 @@ def push_case(data={}):
 
 
 
-
 def analyz_loge(log='log.lammps'):
     import sys
     """ Analyzes log.lammps file, at present  energy/atom data extraction is implemented"""
     en=0
+    press=0
     c11=0
     c22=0
     c33=0
@@ -95,6 +95,7 @@ def analyz_loge(log='log.lammps'):
     c23=0
     c14=0
     c15=0
+    c16=0
     c14=0
     c24=0
     c25=0
@@ -111,6 +112,8 @@ def analyz_loge(log='log.lammps'):
        for i, line in enumerate(lines):
            if 'Loop time of' in line:
                toten=float(lines[i-1].split()[12])
+               press=float(lines[i-1].split()[2])
+               press=float(press)*0.0001
                en=float(lines[i-1].split()[12])/float(lines[i-1].split()[17])
                break
        logfile.close()
@@ -140,6 +143,8 @@ def analyz_loge(log='log.lammps'):
                c66=((str((lines[i+1])).split("=")[1]).split("GPa"))[0]
            if 'print "Elastic Constant C14all = ${C14all} ${cunits}"' in line:
                c14=((str((lines[i+1])).split("=")[1]).split("GPa"))[0]
+           if 'print "Elastic Constant C15all = ${C15all} ${cunits}"' in line:
+               c15=((str((lines[i+1])).split("=")[1]).split("GPa"))[0]
            if 'print "Elastic Constant C16all = ${C16all} ${cunits}"' in line:
                c16=((str((lines[i+1])).split("=")[1]).split("GPa"))[0]
            if 'print "Elastic Constant C24all = ${C24all} ${cunits}"' in line:
@@ -163,8 +168,8 @@ def analyz_loge(log='log.lammps'):
        logfile.close()
     except:
        pass
-    return round(en,2),float(toten),round(float(c11),1),round(float(c22),1),round(float(c33),1),round(float(c12),1),round(float(c13),1),round(float(c23),1),round(float(c44),1),round(float(c55),1),round(float(c66),1),round(float(c14),1),round(float(c16),1),round(float(c24),1),round(float(c25),1),round(float(c26),1),round(float(c34),1),round(float(c35),1),round(float(c36),1),round(float(c45),1),round(float(c46),1),round(float(c56),1)
-#( en,c11,c22,c33,c12,c13,c23,c44,c55,c66,c14,c16,c24,c25,c26,c34,c35,c36,c45,c46,c56)=analyz_log()
+    return round(en,2),round(press,2),float(toten),round(float(c11),1),round(float(c22),1),round(float(c33),1),round(float(c12),1),round(float(c13),1),round(float(c23),1),round(float(c44),1),round(float(c55),1),round(float(c66),1),round(float(c14),1),round(float(c15),1),round(float(c16),1),round(float(c24),1),round(float(c25),1),round(float(c26),1),round(float(c34),1),round(float(c35),1),round(float(c36),1),round(float(c45),1),round(float(c46),1),round(float(c56),1)
+
 #print en,c11,c22
 
 # all the info/warnings/outputs redirected to the log file: 
@@ -185,7 +190,7 @@ logger = get_logger('lammps_Al_O')
 #    return en
 
 
-els=Element #all_symbols()
+els=Element#all_symbols()
 #els=['Ti']
 allsymb=Element #all_symbols()
 files=[]
@@ -200,7 +205,6 @@ for nist in glob.glob('*nist'):
     #for el in els:
         #try:
            ff=((nist.split("lammps_")[1]).split(".nist")[0])
-           print ff
            mp_json=str(ff)+str("_data.json")
            step1_json=str(ff)+str("_step1.json")
            all_jobs = jobs_from_file(step1_json)
@@ -211,7 +215,7 @@ for nist in glob.glob('*nist'):
                try:
                    log=str(job.job_dir)+'/log.lammps'
                #en=analyz_log(log=log)
-                   (en,toten,c11,c22,c33,c12,c13,c23,c44,c55,c66,c14,c16,c24,c25,c26,c34,c35,c36,c45,c46,c56)=analyz_loge(log)
+                   (en,press,toten,c11,c22,c33,c12,c13,c23,c44,c55,c66,c14,c15,c16,c24,c25,c26,c34,c35,c36,c45,c46,c56)=analyz_loge(log)
                    try:  
                        if job.vis.mplmp.parameters['units'] :
                           en=float(en)*0.043 
@@ -284,14 +288,41 @@ for nist in glob.glob('*nist'):
                    
 
                    _case['elastic_matrix']['c1'][0] = c11
-       	       	   _case['elastic_matrix']['c1'][1] = c12
-       	       	   _case['elastic_matrix']['c1'][2] = c13
-       	       	   _case['elastic_matrix']['c2'][1] = c22
-       	       	   _case['elastic_matrix']['c2'][2] = c23
-       	       	   _case['elastic_matrix']['c3'][2] = c33
-       	       	   _case['elastic_matrix']['c4'][3] = c44
-       	       	   _case['elastic_matrix']['c5'][4] = c55
-       	       	   _case['elastic_matrix']['c6'][5] = c66
+                   _case['elastic_matrix']['c1'][1] = c12
+                   _case['elastic_matrix']['c1'][2] = c13
+                   _case['elastic_matrix']['c1'][3] = c14
+                   _case['elastic_matrix']['c1'][4] = c15
+                   _case['elastic_matrix']['c1'][5] = c16
+                   _case['elastic_matrix']['c2'][0] = c12
+                   _case['elastic_matrix']['c2'][1] = c22
+                   _case['elastic_matrix']['c2'][2] = c23
+                   _case['elastic_matrix']['c2'][3] = c24
+                   _case['elastic_matrix']['c2'][4] = c25
+                   _case['elastic_matrix']['c2'][5] = c26
+                   _case['elastic_matrix']['c3'][0] = c13
+                   _case['elastic_matrix']['c3'][1] = c23
+                   _case['elastic_matrix']['c3'][2] = c33
+                   _case['elastic_matrix']['c3'][3] = c34
+                   _case['elastic_matrix']['c3'][4] = c35
+                   _case['elastic_matrix']['c3'][5] = c36
+                   _case['elastic_matrix']['c4'][0] = c14
+                   _case['elastic_matrix']['c4'][1] = c24
+                   _case['elastic_matrix']['c4'][2] = c34
+                   _case['elastic_matrix']['c4'][3] = c44
+                   _case['elastic_matrix']['c4'][4] = c45
+                   _case['elastic_matrix']['c4'][5] = c46
+                   _case['elastic_matrix']['c5'][0] = c15
+                   _case['elastic_matrix']['c5'][1] = c25
+                   _case['elastic_matrix']['c5'][2] = c35
+                   _case['elastic_matrix']['c5'][3] = c45
+                   _case['elastic_matrix']['c5'][4] = c55
+                   _case['elastic_matrix']['c5'][5] = c56
+                   _case['elastic_matrix']['c6'][0] = c16
+                   _case['elastic_matrix']['c6'][1] = c26
+                   _case['elastic_matrix']['c6'][2] = c36
+                   _case['elastic_matrix']['c6'][3] = c46
+                   _case['elastic_matrix']['c6'][4] = c56
+                   _case['elastic_matrix']['c6'][5] = c66
 
                    _case['Bv'] = str(Bv)
                    _case['Gv'] = str(Gv)
