@@ -70,7 +70,7 @@ def ZipDir(inputDir, outputZip):
     
 
 def push_case(data={}):
-    conn = httplib.HTTPConnection("52.88.225.214", 5900)
+    conn = httplib.HTTPConnection("", 5900)
     conn.request("POST","%s/push/case"%base, json.dumps(data), headers)
     response = conn.getresponse()
     _data = response.read()
