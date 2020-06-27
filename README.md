@@ -1,5 +1,5 @@
 # JARVIS-FF
-- Visit https://github.com/usnistgov/jarvis
+- Visit https://github.com/JARVIS-Materials-Design/jarvis-tools
 
 - JARVIS-FF contains the scripts used in making repository for evaluating classical force field available at http://www.ctcms.nist.gov/~knc6/periodic.html.
 1) from_ctcms.py is the script to get force-fields from ctcms interatomic potential repository website (http://www.ctcms.nist.gov/potentials/)
